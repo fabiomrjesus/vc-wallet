@@ -1,0 +1,170 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F27E4928-456D-4EE7-B943-E8EC6046D765}|EvmHandler\\EvmHandler.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\evmhandler\\ievmclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F27E4928-456D-4EE7-B943-E8EC6046D765}|EvmHandler\\EvmHandler.csproj|solutionrelative:evmhandler\\ievmclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F27E4928-456D-4EE7-B943-E8EC6046D765}|EvmHandler\\EvmHandler.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\evmhandler\\evmclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F27E4928-456D-4EE7-B943-E8EC6046D765}|EvmHandler\\EvmHandler.csproj|solutionrelative:evmhandler\\evmclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F27E4928-456D-4EE7-B943-E8EC6046D765}|EvmHandler\\EvmHandler.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\evmhandler\\models\\evmclientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F27E4928-456D-4EE7-B943-E8EC6046D765}|EvmHandler\\EvmHandler.csproj|solutionrelative:evmhandler\\models\\evmclientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\gateway.api\\options\\evmclientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|solutionrelative:gateway.api\\options\\evmclientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\gateway.api\\controllers\\holdercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|solutionrelative:gateway.api\\controllers\\holdercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69A3DB55-F5EB-40CD-9B41-0A15967D1EBA}|Orchestrator\\Orchestrator.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\orchestrator\\orchestrator.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{69A3DB55-F5EB-40CD-9B41-0A15967D1EBA}|Orchestrator\\Orchestrator.csproj|solutionrelative:orchestrator\\orchestrator.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{344DD96A-FDCF-4A77-9E8C-F20AFE4C11E0}|Governance\\Governance.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\governance\\governance.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{344DD96A-FDCF-4A77-9E8C-F20AFE4C11E0}|Governance\\Governance.csproj|solutionrelative:governance\\governance.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\gateway.api\\gateway.api.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|solutionrelative:gateway.api\\gateway.api.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|c:\\users\\fabio\\2026\\repos\\vc-wallet\\gateway\\gateway.api\\controllers\\verifiercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{825338F8-6BCF-48E2-8548-A25EF52AAD8E}|Gateway.Api\\Gateway.Api.csproj|solutionrelative:gateway.api\\controllers\\verifiercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EvmClient.cs",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\EvmHandler\\EvmClient.cs",
+              "RelativeDocumentMoniker": "EvmHandler\\EvmClient.cs",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\EvmHandler\\EvmClient.cs",
+              "RelativeToolTip": "EvmHandler\\EvmClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T13:38:32.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EvmClientOptions.cs",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\EvmHandler\\Models\\EvmClientOptions.cs",
+              "RelativeDocumentMoniker": "EvmHandler\\Models\\EvmClientOptions.cs",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\EvmHandler\\Models\\EvmClientOptions.cs",
+              "RelativeToolTip": "EvmHandler\\Models\\EvmClientOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T13:38:24.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EvmClientOptions.cs",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Options\\EvmClientOptions.cs",
+              "RelativeDocumentMoniker": "Gateway.Api\\Options\\EvmClientOptions.cs",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Options\\EvmClientOptions.cs",
+              "RelativeToolTip": "Gateway.Api\\Options\\EvmClientOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T13:37:22.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IEvmClient.cs",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\EvmHandler\\IEvmClient.cs",
+              "RelativeDocumentMoniker": "EvmHandler\\IEvmClient.cs",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\EvmHandler\\IEvmClient.cs",
+              "RelativeToolTip": "EvmHandler\\IEvmClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T13:34:59.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Orchestrator",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Orchestrator\\Orchestrator.csproj",
+              "RelativeDocumentMoniker": "Orchestrator\\Orchestrator.csproj",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Orchestrator\\Orchestrator.csproj",
+              "RelativeToolTip": "Orchestrator\\Orchestrator.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-21T13:28:17.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Governance",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Governance\\Governance.csproj",
+              "RelativeDocumentMoniker": "Governance\\Governance.csproj",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Governance\\Governance.csproj",
+              "RelativeToolTip": "Governance\\Governance.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-21T13:28:04.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Gateway.Api",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Gateway.Api.csproj",
+              "RelativeDocumentMoniker": "Gateway.Api\\Gateway.Api.csproj",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Gateway.Api.csproj",
+              "RelativeToolTip": "Gateway.Api\\Gateway.Api.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-21T13:27:33.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "VerifierController.cs",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Controllers\\VerifierController.cs",
+              "RelativeDocumentMoniker": "Gateway.Api\\Controllers\\VerifierController.cs",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Controllers\\VerifierController.cs",
+              "RelativeToolTip": "Gateway.Api\\Controllers\\VerifierController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T10:58:15.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HolderController.cs",
+              "DocumentMoniker": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Controllers\\HolderController.cs",
+              "RelativeDocumentMoniker": "Gateway.Api\\Controllers\\HolderController.cs",
+              "ToolTip": "C:\\Users\\fabio\\2026\\repos\\vc-wallet\\Gateway\\Gateway.Api\\Controllers\\HolderController.cs",
+              "RelativeToolTip": "Gateway.Api\\Controllers\\HolderController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T10:58:02.86Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
