@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package prover;
+
+service ProverService {
+  rpc GenerateProof(GenerateProofRequest) returns (GenerateProofResponse);
+  rpc VerifyProof(VerifyProofRequest) returns (VerifyProofResponse);
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+message GenerateProofRequest {
+  string circuit_id = 1;
+  string tenant_id = 2;
+  string issuer_id = 3;
+  map<string, string> public_inputs = 4;
+  bytes witness_blob = 5;
+}
+
+message GenerateProofResponse {
+  string proof_id = 1;
+  bytes proof = 2;
+  string circuit_id = 3;
+  map<string, string> public_inputs = 4;
+  bool success = 5;
+  string error_message = 6;
+}
+
+message VerifyProofRequest {
+  string circuit_id = 1;
+  string tenant_id = 2;
+  string issuer_id = 3;
+  bytes proof = 4;
+  map<string, string> public_inputs = 5;
+  bytes witness_hint = 6;
+}
+
+enum ProofVerificationStatus {
+  STATUS_UNKNOWN = 0;
+  STATUS_VALID = 1;
+  STATUS_INVALID = 2;
+  STATUS_ERROR = 3;
+}
+
+message VerifyProofResponse {
+  ProofVerificationStatus status = 1;
+  string error_message = 2;
+  string circuit_id = 3;
+  string proof_id = 4;
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string status = 1;
+}

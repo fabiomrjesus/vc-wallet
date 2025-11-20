@@ -1,0 +1,17 @@
+[package]
+name = "prover-service"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tonic = { version = "0.12", features = ["transport"] }
+prost = "0.13"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tokio-stream = { version = "0.1", features = ["net"] }
+sha2 = "0.10"
+uuid = { version = "1.10", features = ["v4"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+
+[build-dependencies]
+tonic-build = "0.12"

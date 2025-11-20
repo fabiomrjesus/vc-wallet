@@ -13,6 +13,7 @@ pids
 *.pid
 *.seed
 *.pid.lock
+Tasks.md
 
 # Coverage
 coverage
@@ -117,3 +118,10 @@ pnpm-lock.yaml
 ~$*
 *.tmp
 *.temp
+
+# Rust / Cargo
+target/
+**/*.rs.bk
+
+# C# tests
+TestResults/
