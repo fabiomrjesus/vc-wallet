@@ -34,13 +34,14 @@ impl ProverService for ProverServiceImpl {
         );
 
         if self.registry.get_circuit(&req.circuit_id).is_none() {
+            let circuit_id = req.circuit_id.clone();
             let response = GenerateProofResponse {
                 proof_id: String::new(),
                 proof: Vec::new(),
                 circuit_id: req.circuit_id,
                 public_inputs: req.public_inputs,
                 success: false,
-                error_message: format!("Unknown or disabled circuit_id: {}", req.circuit_id),
+                error_message: format!("Unknown or disabled circuit_id: {}", circuit_id),
             };
             return Ok(Response::new(response));
         }
