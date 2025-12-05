@@ -18,7 +18,7 @@ export const tenantColumns: TableColumn<Tenant>[] = [
     accessor: () => '',
     isActionColumn: true,
     showViewAction: true,
-    showEditAction: true,
-    showDeleteAction: true,
+    showEditAction: false,
+    showDeleteAction: false,
   },
 ]

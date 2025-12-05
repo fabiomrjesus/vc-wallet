@@ -219,7 +219,7 @@ export function GenericTable<T>({
         <HStack>
           <IconButton
             aria-label="First page"
-            size="sm"
+            size="xs"
             onClick={() => setPage(0)}
             disabled={currentPage === 0}
           >
@@ -227,7 +227,7 @@ export function GenericTable<T>({
           </IconButton>
           <IconButton
             aria-label="Previous page"
-            size="sm"
+            size="xs"
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={currentPage === 0}
           >
@@ -236,7 +236,7 @@ export function GenericTable<T>({
           <Text fontWeight="semibold">{currentPage + 1}</Text>
           <IconButton
             aria-label="Next page"
-            size="sm"
+            size="xs"
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={currentPage >= totalPages - 1}
           >
@@ -244,7 +244,7 @@ export function GenericTable<T>({
           </IconButton>
           <IconButton
             aria-label="Last page"
-            size="sm"
+            size="xs"
             onClick={() => setPage(totalPages - 1)}
             disabled={currentPage >= totalPages - 1}
           >
