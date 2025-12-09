@@ -41,21 +41,16 @@ contract HubGovernanceOffchain is OffChainQuorum {
     constructor()
         OffChainQuorum("VCWalletHubGovernance", "1")
     {
-        // QuorumBase constructor sets owner = msg.sender, quorum = 0
-        _addSignerInternal(msg.sender); // owner is first signer
-        _setQuorum(1);                  // 1-of-1 initially
+        _addSignerInternal(msg.sender);
+        _setQuorum(1);                 
     }
 
-    // ---------- Invariant tweaks on signer removal ----------
-
-    /// @dev Owner cannot be removed; last signer cannot be removed.
     function _removeSignerInternal(address signer) internal override {
         if (signer == owner) revert CannotRemoveOwner();
         if (signerCount == 1) revert CannotRemoveLastSigner();
         super._removeSignerInternal(signer);
     }
 
-    // ---------- Proposal ID helper ----------
 
     function _buildProposalId(GlobalActionType actionType, bytes memory data)
         internal
@@ -64,7 +59,6 @@ contract HubGovernanceOffchain is OffChainQuorum {
         return keccak256(abi.encode(actionType, keccak256(data), proposalNonce++));
     }
 
-    // ---------- AssignSigner (quorum + handshake) ----------
 
     function proposeAssignSigner(address candidate)
         external

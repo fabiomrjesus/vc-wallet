@@ -1,75 +1,42 @@
-# React + TypeScript + Vite
+# VC WALLET
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Utilizadores
+**Admin**  
+Address - 0xBe253d7330F8FD449fAf1d68ac641E6561682F6F  
+UUID - 9130edb8-85bf-41c8-ad08-68d5f100633d  
+photo - james_bond_001
+name - Jaime Ligação
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Issuer Admin**  
+Address - 0xD3AC1D047c5b7fc8852fCC02e43b995c0Ef76c73  
+UUID - c8f87557-63a2-4582-8337-bba2c765e1e2  
+photo - john_snow_001  
+name - João Neve
 
-## React Compiler
+**Issuer 1**  
+Address - 0xc8747d991783b965787084ad0FF89505D1Ea968f  
+UUID -  33c92db8-1ac3-42ff-aecb-4de8eb229da4  
+photo - harry_potter_001  
+name - Henrique Oleiro  
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+**Issuer 2**  
+Address - 0x8527BE2F072ce30Ff078f379b4019e608c99de6F   
+UUID - 18f41493-2fd0-442d-8d36-cde2a3d9c0d2  
+photo - ellen_ripley_001  
+name - Helena Lei de Rasgão
 
-Note: This will impact Vite dev & build performances.
+**Holder 1**
 
-## Expanding the ESLint configuration
+**Holder 2**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Holder 3**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Verifier**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Contratos
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Profile Badge** - 0xc7D9113cE3775C80d40bFeeeCb555ba5cD49A159

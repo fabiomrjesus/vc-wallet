@@ -1,7 +1,7 @@
-import { Box, HStack, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, HStack, Menu, Portal, Spacer, Text, VStack } from '@chakra-ui/react'
 import './App.css'
 import { BrowserRouter, Link, Navigate, Route, Routes, matchPath, useLocation } from 'react-router-dom'
-import type { ReactElement } from 'react'
+import { useState, type ReactElement } from 'react'
 import { LuScrollText } from 'react-icons/lu'
 import { FaCheckDouble, FaWallet } from 'react-icons/fa'
 import { TbCertificate, TbMessage2Plus, TbMessageCancel, TbPencilCheck, TbSchema } from 'react-icons/tb'
@@ -22,26 +22,35 @@ import VerifyProofPage from './pages/verifier/VerifyProofPage'
 import VerifierClaimsPage from './pages/verifier/ClaimsPage'
 import IssuersPage from './pages/admin/Issuers/IssuersPage'
 import NewIssuerPage from './pages/admin/Issuers/NewIssuerPage'
+import { AdminHomePage, HomePage } from './pages/home'
+import { WalletAvatar } from './components/vc-wallet/WalletAvatar'
+import { WalletProvider } from './context/WalletContext'
+import { useWalletContext } from './hooks/useWalletConnect'
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <Box w="100vw" h="100vh" bg="#ffffff">
-        <HStack gap="0" w="100%" h="100%" bg="#f6f6f6">
-          <SideMenu/>
-          <AppRoutes/>
-        </HStack>     
-      </Box>
-    </BrowserRouter>
+    <WalletProvider>
+      <BrowserRouter>
+        <Box w="100vw" h="100vh" bg="#ffffff">
+          <HStack gap="0" w="100%" h="100%" bg="#f6f6f6">
+            <SideMenu/>
+            <AppRoutes/>
+          </HStack>     
+        </Box>
+      </BrowserRouter>
+    </WalletProvider>
   )
 }
+
+export type Mode = "NOC" | "OCS" | "OCT";
 
 export function SideMenu()
 {
   const { pathname } = useLocation()
   const isActive = (path:string) => Boolean(matchPath({ path, end: true }, pathname))
-
+  const [mode, setMode] =  useState<Mode>("NOC");
+  const { account, connectWallet } = useWalletContext();
   return (
           <VStack h="100%" pr="1rem" bg="#0C2B4E" pl="1rem" py="1rem" align="start" color="#cccccc" fontSize="0.65rem">
             <HStack color="#ffffff" fontWeight={600} fontSize="1rem" mb="1rem">
@@ -71,8 +80,48 @@ export function SideMenu()
               <MenuLink path="/verifier/proofs/verify" icon={<FaCheckDouble/>} label="Verify Proof" isCurrent={isActive('/verifier/proofs/verify')}/>
               <MenuLink path="/verifier/claims" icon={<LuScrollText/>} label="My Claims" isCurrent={isActive('/verifier/claims')}/>
             </VStack>
+            <Spacer/>
+            {account ? (
+              <WalletAvatar account={account} contractAddress={import.meta.env.VITE_PROFILE_CONTRACT as string | undefined} />
+            ) : (
+              <Button
+                onClick={connectWallet}
+                w="100%"
+                bg="#F6851B"
+                color="#0C2B4E"
+                _hover={{ bg: '#f9a144' }}
+              >
+                Connect MetaMask
+              </Button>
+            )}
+            <SwitchModeMenu value={mode} setValue={setMode}/>
           </VStack>
         )
+}
+
+export function SwitchModeMenu({value, setValue}:{value:Mode, setValue:(value:Mode)=>void})
+{
+  function handleSelect(value:string)
+  {
+    setValue(value as Mode ?? "NOC")
+  }
+
+  return <Menu.Root positioning={{ placement: "right-start" }} onSelect={(e)=> handleSelect(e.value)}>
+              <Menu.Trigger asChild>
+                <Button bg="#9CC6DB" color="#0C2B4E" w="100%">
+                  Switch Mode ({value})
+                </Button>
+              </Menu.Trigger>
+              <Portal>
+                <Menu.Positioner>
+                  <Menu.Content>
+                    <Menu.Item value="NOC">Off-chain</Menu.Item>
+                    <Menu.Item value="OCS">On-chain (signature quorum)</Menu.Item>
+                    <Menu.Item value="OCT">On-chain (transaction quorum)</Menu.Item>
+                  </Menu.Content>
+                </Menu.Positioner>
+              </Portal>
+            </Menu.Root>
 }
 
 export function MenuLink({path, icon, label, isCurrent}:{isCurrent?:boolean, path:string, icon:ReactElement, label:string})
@@ -89,8 +138,8 @@ export function MenuLink({path, icon, label, isCurrent}:{isCurrent?:boolean, pat
 export function AppRoutes()
 {
   return <Routes>
-          <Route path="/" element={<Navigate to="/admin/tenants" replace />} />
-          <Route path="/admin" element={<Navigate to="/admin/tenants" replace />} />
+          <Route path="/" element={<HomePage/>} />
+          <Route path="/admin" element={<AdminHomePage/>} />
           <Route path="/admin/tenants" element={<TenantsPage/>} />
           <Route path="/admin/tenants/new" element={<NewTenantPage/>} />
           <Route path="/admin/schemas" element={<SchemasPage/>} />
@@ -106,7 +155,7 @@ export function AppRoutes()
           <Route path="/holder/claims" element={<HolderClaimsPage/>} />
           <Route path="/verifier/proofs/verify" element={<VerifyProofPage/>} />
           <Route path="/verifier/claims" element={<VerifierClaimsPage/>} />
-          <Route path="*" element={<Navigate to="/admin/tenants" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 }
 
