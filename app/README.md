@@ -40,4 +40,4 @@ name - Helena Lei de Rasgão
 ## Contratos
 
 **Profile Badge** - 0xc7D9113cE3775C80d40bFeeeCb555ba5cD49A159
-**Governance Hub** - 0xFF2c6b7d9D6ae8ECcF875699a5d7b1EcE9463DbA
+**Governance Hub** - 0x396f27a09317C408694E1f2C2361f197f3C43533

@@ -65,21 +65,16 @@ export function SideMenu()
   const { isAdmin: checkIsAdmin, getSignerCount } = useHubGovernanceOffchain(governanceContract);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  console.log(isAdmin);
   useEffect(() => {
     let ignore = false;
     async function load() {
-      console.log(account)
-      console.log(governanceContract)
       if (!account || !governanceContract) {
         if (!ignore) setIsAdmin(false);
         return;
       }
       try {
         const count = await getSignerCount();
-        console.log(count);
         const res = await checkIsAdmin(account);
-        console.log(res);
         if (!ignore) setIsAdmin(res);
       } catch {
         if (!ignore) setIsAdmin(false);
