@@ -1,4 +1,4 @@
-import type { Tenant } from '@/models/tenant'
+import type { Tenant } from '../../../models/tenant'
 
 export const tenantMocks: Tenant[] = [
   { id: 'tenant-1', name: 'Wallet Org', description: 'Primary production tenant' },

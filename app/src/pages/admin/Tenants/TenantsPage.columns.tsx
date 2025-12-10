@@ -1,6 +1,6 @@
 import { Text } from '@chakra-ui/react'
-import type { TableColumn } from '@/components/vc-wallet/Table'
-import type { Tenant } from '@/models/tenant'
+import type { TableColumn } from '../../../components/vc-wallet/Table'
+import type { Tenant } from '../../../models/tenant'
 
 export const tenantColumns: TableColumn<Tenant>[] = [
   {

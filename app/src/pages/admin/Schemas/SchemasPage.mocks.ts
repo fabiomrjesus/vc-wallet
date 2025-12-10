@@ -1,4 +1,4 @@
-import type { CredentialSchema } from '@/models/schema'
+import type { CredentialSchema } from '../../../models/schema'
 
 export const schemaMocks: CredentialSchema[] = [
   { id: 'schema-1', tenantId: 'tenant-1', tenantName: 'Wallet Org', name: 'Employee ID', version: '1.0.0', fieldCount: 5 },

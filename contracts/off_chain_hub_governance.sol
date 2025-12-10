@@ -17,10 +17,14 @@ contract HubGovernanceOffchain is OffChainQuorum {
     struct GlobalProposal {
         GlobalActionType actionType;
         bytes data;   // encoded payload, meaning depends on actionType
+        address proposer;
+        uint64 createdAt;
+        uint64 executedAt;
         bool executed;
     }
 
     mapping(bytes32 => GlobalProposal) public proposals;
+    mapping(uint256 => bytes32) public proposalIds;
     mapping(bytes32 => bool) public assignCandidateAccepted;
     uint256 public proposalNonce;
 
@@ -30,8 +34,9 @@ contract HubGovernanceOffchain is OffChainQuorum {
     error NotCandidate();
     error InvalidActionType();
 
-    event GlobalProposalCreated(bytes32 indexed proposalId, GlobalActionType actionType);
+    event GlobalProposalCreated(bytes32 indexed proposalId, GlobalActionType actionType, address indexed proposer);
     event GlobalProposalExecuted(bytes32 indexed proposalId);
+    event GlobalProposalIndexed(uint256 indexed nonce, bytes32 indexed proposalId, address indexed proposer);
 
     modifier onlySigner() {
         if (!_isSigner[msg.sender]) revert NotSigner();
@@ -54,9 +59,12 @@ contract HubGovernanceOffchain is OffChainQuorum {
 
     function _buildProposalId(GlobalActionType actionType, bytes memory data)
         internal
-        returns (bytes32)
+        returns (bytes32 proposalId, uint256 nonceUsed)
     {
-        return keccak256(abi.encode(actionType, keccak256(data), proposalNonce++));
+        nonceUsed = proposalNonce++;
+        proposalId = keccak256(abi.encode(actionType, keccak256(data), nonceUsed));
+        proposalIds[nonceUsed] = proposalId;
+        emit GlobalProposalIndexed(nonceUsed, proposalId, msg.sender);
     }
 
 
@@ -69,15 +77,18 @@ contract HubGovernanceOffchain is OffChainQuorum {
         require(!_isSigner[candidate], "Already signer");
 
         bytes memory data = abi.encode(candidate);
-        proposalId = _buildProposalId(GlobalActionType.AssignSigner, data);
+        (proposalId, ) = _buildProposalId(GlobalActionType.AssignSigner, data);
 
         proposals[proposalId] = GlobalProposal({
             actionType: GlobalActionType.AssignSigner,
             data: data,
+            proposer: msg.sender,
+            createdAt: uint64(block.timestamp),
+            executedAt: 0,
             executed: false
         });
 
-        emit GlobalProposalCreated(proposalId, GlobalActionType.AssignSigner);
+        emit GlobalProposalCreated(proposalId, GlobalActionType.AssignSigner, msg.sender);
     }
 
     /// @notice Candidate explicitly accepts becoming a signer.
@@ -101,15 +112,18 @@ contract HubGovernanceOffchain is OffChainQuorum {
         require(signerToRevoke != owner, "Cannot revoke owner directly");
 
         bytes memory data = abi.encode(signerToRevoke);
-        proposalId = _buildProposalId(GlobalActionType.RevokeSigner, data);
+        (proposalId, ) = _buildProposalId(GlobalActionType.RevokeSigner, data);
 
         proposals[proposalId] = GlobalProposal({
             actionType: GlobalActionType.RevokeSigner,
             data: data,
+            proposer: msg.sender,
+            createdAt: uint64(block.timestamp),
+            executedAt: 0,
             executed: false
         });
 
-        emit GlobalProposalCreated(proposalId, GlobalActionType.RevokeSigner);
+        emit GlobalProposalCreated(proposalId, GlobalActionType.RevokeSigner, msg.sender);
     }
 
     // ---------- TransferOwnership (owner proposes, quorum approves) ----------
@@ -124,15 +138,18 @@ contract HubGovernanceOffchain is OffChainQuorum {
         require(newOwnerCandidate != owner, "Already owner");
 
         bytes memory data = abi.encode(newOwnerCandidate);
-        proposalId = _buildProposalId(GlobalActionType.TransferOwnership, data);
+        (proposalId, ) = _buildProposalId(GlobalActionType.TransferOwnership, data);
 
         proposals[proposalId] = GlobalProposal({
             actionType: GlobalActionType.TransferOwnership,
             data: data,
+            proposer: msg.sender,
+            createdAt: uint64(block.timestamp),
+            executedAt: 0,
             executed: false
         });
 
-        emit GlobalProposalCreated(proposalId, GlobalActionType.TransferOwnership);
+        emit GlobalProposalCreated(proposalId, GlobalActionType.TransferOwnership, msg.sender);
     }
 
     // ---------- SetContractRole (generic role mgmt: tenant admins, issuer admins, etc.) ----------
@@ -145,15 +162,18 @@ contract HubGovernanceOffchain is OffChainQuorum {
     ) external onlySigner returns (bytes32 proposalId) {
         require(targetContract != address(0), "Zero contract");
         bytes memory data = abi.encode(targetContract, roleId, account, enabled);
-        proposalId = _buildProposalId(GlobalActionType.SetContractRole, data);
+        (proposalId, ) = _buildProposalId(GlobalActionType.SetContractRole, data);
 
         proposals[proposalId] = GlobalProposal({
             actionType: GlobalActionType.SetContractRole,
             data: data,
+            proposer: msg.sender,
+            createdAt: uint64(block.timestamp),
+            executedAt: 0,
             executed: false
         });
 
-        emit GlobalProposalCreated(proposalId, GlobalActionType.SetContractRole);
+        emit GlobalProposalCreated(proposalId, GlobalActionType.SetContractRole, msg.sender);
     }
 
     // ---------- Execute proposals (off-chain signatures) ----------
@@ -179,6 +199,7 @@ contract HubGovernanceOffchain is OffChainQuorum {
         }
 
         p.executed = true;
+        p.executedAt = uint64(block.timestamp);
         emit GlobalProposalExecuted(proposalId);
     }
 
@@ -192,12 +213,11 @@ contract HubGovernanceOffchain is OffChainQuorum {
         (address target) = abi.decode(p.data, (address));
         require(target != owner, "Owner cannot be revoked via proposal");
 
-        // Two-signers edge case: only owner may execute revocation.
         if (signerCount == 2) {
             require(msg.sender == owner, "Only owner can break 2-signer deadlock");
         }
 
-        _removeSignerInternal(target); // prevents last-signer removal
+        _removeSignerInternal(target);
     }
 
     function _executeTransferOwnership(GlobalProposal storage p) internal {

@@ -1,9 +1,9 @@
 import { Box, Button, HStack, Menu, Portal, Spacer, Text, VStack } from '@chakra-ui/react'
 import './App.css'
 import { BrowserRouter, Link, Navigate, Route, Routes, matchPath, useLocation } from 'react-router-dom'
-import { useState, type ReactElement } from 'react'
+import { useEffect, useState, type ReactElement } from 'react'
 import { LuScrollText } from 'react-icons/lu'
-import { FaCheckDouble, FaWallet } from 'react-icons/fa'
+import { FaCheckDouble, FaNetworkWired, FaWallet } from 'react-icons/fa'
 import { TbCertificate, TbMessage2Plus, TbMessageCancel, TbPencilCheck, TbSchema } from 'react-icons/tb'
 import { FaHouse } from 'react-icons/fa6'
 import { MdFactCheck } from 'react-icons/md'
@@ -26,6 +26,15 @@ import { AdminHomePage, HomePage } from './pages/home'
 import { WalletAvatar } from './components/vc-wallet/WalletAvatar'
 import { WalletProvider } from './context/WalletContext'
 import { useWalletContext } from './hooks/useWalletConnect'
+import { useHubGovernanceOffchain } from './hooks/useHubGovernanceOffchain'
+import HubPage from './pages/hub/HubPage'
+import ProposeSignerPage from './pages/hub/ProposeSignerPage'
+import RevokeSignerPage from './pages/hub/RevokeSignerPage'
+import TransferOwnershipPage from './pages/hub/TransferOwnershipPage'
+import SetQuorumPage from './pages/hub/SetQuorumPage'
+import ListProposalsPage from './pages/hub/ListProposalsPage'
+import ProposalDetailPage from './pages/hub/ProposalDetailPage'
+import { Toaster } from './components/ui/toaster'
 
 function App() {
 
@@ -38,6 +47,7 @@ function App() {
             <AppRoutes/>
           </HStack>     
         </Box>
+        <Toaster />
       </BrowserRouter>
     </WalletProvider>
   )
@@ -51,19 +61,54 @@ export function SideMenu()
   const isActive = (path:string) => Boolean(matchPath({ path, end: true }, pathname))
   const [mode, setMode] =  useState<Mode>("NOC");
   const { account, connectWallet } = useWalletContext();
+  const governanceContract = import.meta.env.VITE_GOVERNANCE_CONTRACT as string | undefined;
+  const { isAdmin: checkIsAdmin, getSignerCount } = useHubGovernanceOffchain(governanceContract);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  console.log(isAdmin);
+  useEffect(() => {
+    let ignore = false;
+    async function load() {
+      console.log(account)
+      console.log(governanceContract)
+      if (!account || !governanceContract) {
+        if (!ignore) setIsAdmin(false);
+        return;
+      }
+      try {
+        const count = await getSignerCount();
+        console.log(count);
+        const res = await checkIsAdmin(account);
+        console.log(res);
+        if (!ignore) setIsAdmin(res);
+      } catch {
+        if (!ignore) setIsAdmin(false);
+      }
+    }
+    void load();
+    return () => {
+      ignore = true;
+    };
+  }, [account, checkIsAdmin, governanceContract]);
+
   return (
           <VStack h="100%" pr="1rem" bg="#0C2B4E" pl="1rem" py="1rem" align="start" color="#cccccc" fontSize="0.65rem">
             <HStack color="#ffffff" fontWeight={600} fontSize="1rem" mb="1rem">
               <FaWallet/>
               <Text>VC WALLET</Text>
             </HStack>
-            <Text pl="0.5rem" color="#999999" pb="0.25rem">ADMIN</Text>
-            <VStack fontSize="0.85rem" gap={1} color="#ffffff" w="100%" align="start" mb="1.25rem">
-              <MenuLink path="/admin/tenants" icon={<FaHouse/>} label="Tenants" isCurrent={isActive('/admin/tenants')}/>
-              <MenuLink path="/admin/schemas" icon={<TbSchema/>} label="Schemas" isCurrent={isActive('/admin/schemas')}/>
-              <MenuLink path="/admin/issuers" icon={<TbCertificate/>} label="Issuers" isCurrent={isActive('/admin/issuers')}/>
-              <MenuLink path="/admin/predicates" icon={<MdFactCheck/>} label="Predicates" isCurrent={isActive('/admin/predicates')}/>
-            </VStack>
+            {isAdmin && (
+              <>
+                <Text pl="0.5rem" color="#999999" pb="0.25rem">ADMIN</Text>
+                <VStack fontSize="0.85rem" gap={1} color="#ffffff" w="100%" align="start" mb="1.25rem">
+                  <MenuLink path="/hub" icon={<FaNetworkWired />} label="Hub" isCurrent={isActive('/hub')}/>
+                  <MenuLink path="/admin/tenants" icon={<FaHouse/>} label="Tenants" isCurrent={isActive('/admin/tenants')}/>
+                  <MenuLink path="/admin/schemas" icon={<TbSchema/>} label="Schemas" isCurrent={isActive('/admin/schemas')}/>
+                  <MenuLink path="/admin/issuers" icon={<TbCertificate/>} label="Issuers" isCurrent={isActive('/admin/issuers')}/>
+                  <MenuLink path="/admin/predicates" icon={<MdFactCheck/>} label="Predicates" isCurrent={isActive('/admin/predicates')}/>
+                </VStack>
+              </>
+            )}
             <Text pl="0.5rem" pb="0.25rem" color="#999999">ISSUER</Text>
             <VStack w="100%" fontSize="0.85rem" gap={3} color="#ffffff" align="start" mb="1.25rem">
               <MenuLink path="/issuer/claims/issue" icon={<TbMessage2Plus/>} label="Issue Claim" isCurrent={isActive('/issuer/claims/issue')}/>
@@ -148,6 +193,13 @@ export function AppRoutes()
           <Route path="/admin/issuers/new" element={<NewIssuerPage/>} />
           <Route path="/admin/predicates" element={<PredicatesPage/>} />
           <Route path="/admin/predicates/new" element={<NewPredicatePage/>} />
+          <Route path="/hub" element={<HubPage/>} />
+          <Route path="/hub/propose-signer" element={<ProposeSignerPage/>} />
+          <Route path="/hub/revoke-signer" element={<RevokeSignerPage/>} />
+          <Route path="/hub/transfer-ownership" element={<TransferOwnershipPage/>} />
+          <Route path="/hub/set-quorum" element={<SetQuorumPage/>} />
+          <Route path="/hub/list-proposals" element={<ListProposalsPage/>} />
+          <Route path="/hub/proposals/:proposalId" element={<ProposalDetailPage/>} />
           <Route path="/issuer/claims/issue" element={<IssueClaimPage/>} />
           <Route path="/issuer/claims/revoke" element={<RevokeClaimPage/>} />
           <Route path="/issuer/claims" element={<IssuerClaimsPage/>} />

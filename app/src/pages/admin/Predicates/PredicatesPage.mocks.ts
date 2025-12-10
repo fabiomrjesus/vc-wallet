@@ -1,4 +1,4 @@
-import type { Predicate } from '@/models/predicate'
+import type { Predicate } from '../../../models/predicate'
 
 export const predicateMocks: Predicate[] = [
   {

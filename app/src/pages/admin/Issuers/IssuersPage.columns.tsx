@@ -1,8 +1,8 @@
 import { Button, HStack } from '@chakra-ui/react'
 import { FaCheckCircle, FaPlusCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import type { Issuer } from '@/models/issuer'
-import type { TableColumn } from '@/components/vc-wallet/Table'
+import type { Issuer } from '../../../models/issuer'
+import type { TableColumn } from '../../../components/vc-wallet/Table'
 
 export const issuerColumns: TableColumn<Issuer>[] = [
   {

@@ -18,6 +18,7 @@ abstract contract QuorumBase {
     event SignerRemoved(address indexed signer);
     event QuorumUpdated(uint256 quorum);
     event OwnerChanged(address indexed oldOwner, address indexed newOwner);
+    event QuorumEnforced(uint256 quorum);
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert OnlyOwner();
@@ -92,7 +93,7 @@ abstract contract QuorumBase {
     function _enforceQuorum() internal virtual {
         if (quorum > signerCount) {
             quorum = signerCount;
-            emit QuorumUpdated(quorum);
+            emit QuorumEnforced(quorum);
         }
     }
 

@@ -1,7 +1,7 @@
 import { Text } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import type { TableColumn } from '@/components/vc-wallet/Table'
-import type { Predicate } from '@/models/predicate'
+import type { TableColumn } from '../../../components/vc-wallet/Table'
+import type { Predicate } from '../../../models/predicate'
 
 export const predicateColumns: TableColumn<Predicate>[] = [
   {

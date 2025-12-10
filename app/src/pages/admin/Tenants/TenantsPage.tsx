@@ -1,11 +1,10 @@
-import { Card, HStack, Text, VStack } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { HStack, VStack } from '@chakra-ui/react'
 import { FaHouse, FaHouseChimneyUser, FaHouseCircleExclamation, FaHouseCircleXmark } from 'react-icons/fa6'
 import PageHeader from '../../../components/PageHeader'
 import { GenericTable } from '../../../components/vc-wallet/Table'
 import { tenantColumns } from './TenantsPage.columns'
 import { tenantMocks } from './TenantsPage.mocks'
-import type { ReactElement } from 'react'
+import { OperationCard } from '../../../components/vc-wallet/cards'
 
 export default function TenantsPage() {
   return (
@@ -58,19 +57,3 @@ export function RevokeTenantCard()
   />
 }
 
-export function OperationCard({path, label, description, icon}:{path:string, label:string, description?:string, icon:ReactElement})
-{
-  const Icon = icon;
-  return <Link to={path}>
-        <Card.Root w="8rem" h="7rem" variant="elevated">
-          <Card.Body w="100%" gap="1">
-            <HStack mx="auto" fontSize="2rem">
-              {Icon}
-            </HStack>
-            <Text textWrap="nowrap" mx="auto"  fontSize="0.75rem" fontWeight="medium">{label}</Text>
-            <Text textWrap="nowrap" mx="auto" fontSize="0.55rem" fontWeight="light" color="#666666">{description}</Text>
-          </Card.Body>
-        </Card.Root>
-      </Link>
-      
-}

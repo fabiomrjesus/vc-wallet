@@ -1,8 +1,8 @@
 import { Button, HStack, Text } from '@chakra-ui/react'
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import type { TableColumn } from '@/components/vc-wallet/Table'
-import type { CredentialSchema } from '@/models/schema'
+import type { TableColumn } from '../../../components/vc-wallet/Table'
+import type { CredentialSchema } from '../../../models/schema'
 
 export const schemaColumns: TableColumn<CredentialSchema>[] = [
   {

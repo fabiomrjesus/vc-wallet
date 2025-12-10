@@ -1,4 +1,4 @@
-import type { Issuer } from '@/models/issuer'
+import type { Issuer } from '../../../models/issuer'
 
 export const issuerMocks: Issuer[] = [
   { id: 'issuer-1', name: 'Wallet Org Issuer', identifier: 'did:example:wallet', tenantId: 'tenant-1', tenantName: 'Wallet Org' },
