@@ -1,15 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using VcWallet.Domain.Entities.OffChain;
 using VcWallet.Domain.Entities.OnChain;
 
-namespace VcWallet.Domain.Contexts
+namespace VcWallet.Domain.Contexts;
+
+public class VcWalletDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
-    public class VcWalletDbContext : DbContext
+    public VcWalletDbContext(DbContextOptions<VcWalletDbContext> options) : base(options)
     {
-        public DbSet<OnChainProposalSignature> OnChainSignatures { get; set; }
-        public DbSet<OffChainHubProposal> OffChainProposal { get; set; }
-        public DbSet<OffChainHubProposalSignature> OffChainProposalSignature { get; set; }
-        public DbSet<VcWalletRole> Roles { get; set; }
-        public DbSet<VcWalletUser> Users { get; set; }
+    }
+
+    public DbSet<OnChainProposalSignature> OnChainProposalSignatures => Set<OnChainProposalSignature>();
+    public DbSet<OffChainHubProposal> OffChainHubProposals => Set<OffChainHubProposal>();
+    public DbSet<OffChainHubProposalSignature> OffChainHubProposalSignatures => Set<OffChainHubProposalSignature>();
+    public DbSet<VcWalletRole> WalletRoles => Set<VcWalletRole>();
+    public DbSet<VcWalletUser> WalletUsers => Set<VcWalletUser>();
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
     }
 }

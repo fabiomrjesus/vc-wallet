@@ -1,4 +1,4 @@
-import { VStack, Text, Input, Button, Field, Spinner } from '@chakra-ui/react'
+import { VStack, Text, Input, Field } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FaUserMinus } from 'react-icons/fa'
 import PageHeader from '../../components/PageHeader'
@@ -7,6 +7,7 @@ import { useWalletContext } from '../../hooks/useWalletConnect'
 import { isAddress, ZeroAddress } from 'ethers'
 import { useNavigate } from 'react-router-dom'
 import { toaster } from '../../components/ui/toaster'
+import { LoadingButton } from '../../components/vc-wallet/buttons'
 
 export default function RevokeSignerPage() {
   const [target, setTarget] = useState('')
@@ -47,7 +48,7 @@ export default function RevokeSignerPage() {
   return (
     <VStack align="start" w="100%" gap="0" m="0" p="0" h="100%">
       <PageHeader icon={<FaUserMinus color="white" size="2rem" />} title="Revoke Signer" description="Propose to revoke signer access." />
-      <VStack px="8rem" py="2rem" w="100%" align="start">
+      <VStack color="black" px="8rem" py="2rem" w="100%" align="start">
         <Field.Root invalid={Boolean(error)} maxW="24rem">
           <Field.Label>Signer address to revoke</Field.Label>
           <Input
@@ -60,9 +61,9 @@ export default function RevokeSignerPage() {
           />
           {error && <Field.ErrorText>{error}</Field.ErrorText>}
         </Field.Root>
-        {submitting ? <Spinner/> :<Button mt="1rem" colorScheme="blue" onClick={onSubmit}>
-                  Submit Proposal
-          </Button>}
+        <LoadingButton loading={submitting} mt="1rem" colorScheme="blue" onClick={onSubmit}>
+          Submit Proposal
+        </LoadingButton>
         <Text color="black" fontSize="sm" mt="0.5rem">
           This will create a proposal to remove the signer.
         </Text>

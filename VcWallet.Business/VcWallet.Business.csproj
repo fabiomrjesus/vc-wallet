@@ -9,6 +9,12 @@
   <ItemGroup>
     <ProjectReference Include="..\VcWallet.DataAccess\VcWallet.DataAccess.csproj" />
     <ProjectReference Include="..\VcWallet.Domain\VcWallet.Domain.csproj" />
+    <ProjectReference Include="..\VcWallet.Eth.Contracts\VcWallet.Eth.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nethereum.Signer" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
 </Project>

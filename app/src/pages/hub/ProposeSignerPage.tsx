@@ -1,4 +1,4 @@
-import { VStack, Text, Input, Button, Field, Spinner } from '@chakra-ui/react'
+import { VStack, Text, Input, Field } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaUserPlus } from 'react-icons/fa'
@@ -7,6 +7,7 @@ import { useHubGovernanceOffchain } from '../../hooks/useHubGovernanceOffchain'
 import { isAddress, ZeroAddress } from 'ethers'
 import { useWalletContext } from '../../hooks/useWalletConnect'
 import { toaster } from '../../components/ui/toaster'
+import { LoadingButton } from '../../components/vc-wallet/buttons'
 
 export default function ProposeSignerPage() {
   const [candidate, setCandidate] = useState('')
@@ -59,9 +60,9 @@ export default function ProposeSignerPage() {
           />
           {error && <Field.ErrorText>{error}</Field.ErrorText>}
         </Field.Root>
-        {submitting ? <Spinner/> :<Button mt="1rem" colorScheme="blue" onClick={onSubmit}>
+        <LoadingButton loading={submitting} mt="1rem" colorScheme="blue" onClick={onSubmit}>
           Submit Proposal
-        </Button>}
+        </LoadingButton>
         <Text color="black" fontSize="sm" mt="0.5rem">
           This will create a proposal requiring quorum approval to add the signer.
         </Text>

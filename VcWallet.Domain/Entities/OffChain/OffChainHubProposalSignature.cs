@@ -7,7 +7,7 @@ public class OffChainHubProposalSignature
     [Key]
     public Guid Id { get; set; }
 
-    public Guid ProposalId { get; set; }
+    public string ProposalId { get; set; } = default!;
 
     public Guid SignerUserId { get; set; }
     public VcWalletUser? Signer { get; set; }

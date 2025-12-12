@@ -36,7 +36,6 @@ public class AuthController(AuthMiddleware auth) : ControllerBase
     {
         var token = await auth.GeneratePasswordResetTokenAsync(email);
         if (token == null) return NotFound();
-        // token should be emailed out-of-band in a real system
         return Ok(new { token });
     }
 

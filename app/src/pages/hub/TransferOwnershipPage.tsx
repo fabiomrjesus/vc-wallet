@@ -1,4 +1,4 @@
-import { VStack, Text, Input, Button, Field, Spinner } from '@chakra-ui/react'
+import { VStack, Text, Input, Field  } from '@chakra-ui/react'
 import { useState } from 'react'
 import PageHeader from '../../components/PageHeader'
 import { GiHouseKeys } from 'react-icons/gi'
@@ -7,6 +7,7 @@ import { useWalletContext } from '../../hooks/useWalletConnect'
 import { isAddress, ZeroAddress } from 'ethers'
 import { useNavigate } from 'react-router-dom'
 import { toaster } from '../../components/ui/toaster'
+import { LoadingButton } from '../../components/vc-wallet/buttons'
 
 export default function TransferOwnershipPage() {
   const [target, setTarget] = useState('')
@@ -59,9 +60,9 @@ export default function TransferOwnershipPage() {
           />
           {error && <Field.ErrorText>{error}</Field.ErrorText>}
         </Field.Root>
-        {submitting ? <Spinner/> :<Button mt="1rem" colorScheme="blue" onClick={onSubmit}>
-                  Submit Proposal
-                </Button>}
+        <LoadingButton mt="1rem" colorScheme="blue" onClick={onSubmit} loading={submitting}>
+          Submit Proposal
+        </LoadingButton>
         <Text color="black" fontSize="sm" mt="0.5rem">
           This will create a proposal to transfer contract ownership.
         </Text>

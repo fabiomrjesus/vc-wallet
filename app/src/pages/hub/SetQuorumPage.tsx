@@ -1,4 +1,4 @@
-import { VStack, Text, Input, Button, Field } from '@chakra-ui/react'
+import { VStack, Text, Input,  Field } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import PageHeader from '../../components/PageHeader'
 import { FaNetworkWired } from 'react-icons/fa'
@@ -6,6 +6,7 @@ import { useHubGovernanceOffchain } from '../../hooks/useHubGovernanceOffchain'
 import { useWalletContext } from '../../hooks/useWalletConnect'
 import { useNavigate } from 'react-router-dom'
 import { toaster } from '../../components/ui/toaster'
+import { LoadingButton } from '../../components/vc-wallet/buttons'
 
 export default function SetQuorumPage() {
   const [value, setValue] = useState<string>('')
@@ -65,7 +66,7 @@ export default function SetQuorumPage() {
   return (
     <VStack align="start" w="100%" gap="0" m="0" p="0" h="100%">
       <PageHeader icon={<FaNetworkWired color="white" size="2rem" />} title="Set Quorum" description="Propose new approval threshold." />
-      <VStack px="8rem" py="2rem" w="100%" align="start">
+      <VStack color="black" px="8rem" py="2rem" w="100%" align="start">
         <Field.Root invalid={Boolean(error)} maxW="20rem">
           <Field.Label>New quorum value</Field.Label>
           <Input
@@ -81,14 +82,11 @@ export default function SetQuorumPage() {
           {error && <Field.ErrorText>{error}</Field.ErrorText>}
         </Field.Root>
         {signerCount !== null && (
-          <Text color="black" fontSize="sm">Signer count: {Number(signerCount)}</Text>
+          <Text color="black" fontWeight="light" fontSize="sm">There are currently {Number(signerCount)} signers available</Text>
         )}
-        <Button mt="1rem" colorScheme="blue" onClick={onSubmit} isLoading={submitting}>
+        <LoadingButton mt="1rem" colorScheme="blue" onClick={onSubmit} loading={submitting}>
           Submit Quorum Proposal
-        </Button>
-        <Text color="black" fontSize="sm" mt="0.5rem">
-          Quorum must be greater than 0 and less than the total signer count.
-        </Text>
+        </LoadingButton>
       </VStack>
     </VStack>
   )

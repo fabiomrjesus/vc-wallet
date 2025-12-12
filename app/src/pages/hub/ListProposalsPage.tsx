@@ -29,11 +29,12 @@ export default function ListProposalsPage() {
   const { provider, isAdmin, getProposal, getProposalIdByIndex, getProposalNonce } = useHubGovernanceOffchain(governanceAddress)
   const { account } = useWalletContext()
   const navigate = useNavigate()
-  const { signProposal } = useHubApi()
+  const { signProposal, getSignatures } = useHubApi()
   const [proposals, setProposals] = useState<ProposalRow[]>([])
   const [loading, setLoading] = useState(false)
   const [admin, setAdmin] = useState(false)
   const [signingId, setSigningId] = useState<string | null>(null)
+  const [signedMap, setSignedMap] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     let ignore = false
@@ -92,17 +93,23 @@ export default function ListProposalsPage() {
 
   const sign = useCallback(
     async (proposalId: string) => {
-      if (!provider) return
+      if (!provider || !account) return
       try {
         setSigningId(proposalId)
+        const existing = await getSignatures(proposalId)
+        if (existing.some(s => s.signerAddress?.toLowerCase() === account.toLowerCase())) {
+          setSignedMap(prev => ({ ...prev, [proposalId]: true }))
+          return
+        }
         const signer = await provider.getSigner()
-        const sig = await signProposalId(proposalId, signer)
+        const sig = await signProposalId(proposalId, signer, governanceAddress!)
         await signProposal(proposalId, { signerAddress: sig.signer, signature: sig.signature })
+        setSignedMap(prev => ({ ...prev, [proposalId]: true }))
       } finally {
         setSigningId(null)
       }
     },
-    [provider, signProposal]
+    [provider, account, getSignatures, signProposal, governanceAddress]
   )
 
   return (
@@ -122,6 +129,7 @@ export default function ListProposalsPage() {
               <Table.Row bg="transparent" color="#000000">
                 <Table.ColumnHeader w="0" color="#000000">ID</Table.ColumnHeader>
                 <Table.ColumnHeader w="0" color="#000000">Type</Table.ColumnHeader>
+                <Table.ColumnHeader w="0" color="#000000">Status</Table.ColumnHeader>
                 <Table.ColumnHeader color="#000000">Actions</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
@@ -140,17 +148,26 @@ export default function ListProposalsPage() {
                         <Text>{actionLabel}</Text>
                     </Badge>
                   </Table.Cell>
+                  <Table.Cell w="0">
+                    <Badge colorPalette={row.executed ? 'green' : 'orange'}>
+                      {row.executed ? 'Executed' : 'Pending'}
+                    </Badge>
+                  </Table.Cell>
                   <Table.Cell w="100%">
                     <HStack w="100%">
                       <Spacer/>
-                      <Button size="sm" variant="subtle" onClick={() => navigate(`/hub/proposals/${row.id}`)}>
+                      <Button size="sm" 
+                          colorPalette="blue"
+                       variant="subtle" onClick={() => navigate(`/hub/proposals/${row.id}`)}>
                         View
                       </Button>
-                      {admin && (
+                      {admin && !row.executed && !signedMap[row.id] && (
                         <Button
                           size="sm"
                           variant="surface"
+                          colorPalette="blue"
                           onClick={() => sign(row.id)}
+                          disabled={signingId === row.id}
                         >
                           Sign
                         </Button>

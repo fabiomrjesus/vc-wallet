@@ -62,7 +62,7 @@ export function SideMenu()
   const [mode, setMode] =  useState<Mode>("NOC");
   const { account, connectWallet } = useWalletContext();
   const governanceContract = import.meta.env.VITE_GOVERNANCE_CONTRACT as string | undefined;
-  const { isAdmin: checkIsAdmin, getSignerCount } = useHubGovernanceOffchain(governanceContract);
+  const { isAdmin: checkIsAdmin } = useHubGovernanceOffchain(governanceContract);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -73,7 +73,6 @@ export function SideMenu()
         return;
       }
       try {
-        const count = await getSignerCount();
         const res = await checkIsAdmin(account);
         if (!ignore) setIsAdmin(res);
       } catch {

@@ -10,9 +10,14 @@ abstract contract QuorumBase {
     uint256 public quorum;
     address public owner;
 
+    mapping(address => uint256) internal _signerIndex; // 1-based index, 0 = not a signer
+    address[] internal _signers;
+
     error OnlyOwner();
     error InvalidSigner(address signer);
     error QuorumTooHigh(uint256 requested, uint256 available);
+    error OnlySigner();
+
 
     event SignerAdded(address indexed signer);
     event SignerRemoved(address indexed signer);
@@ -22,6 +27,11 @@ abstract contract QuorumBase {
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert OnlyOwner();
+        _;
+    }
+
+    modifier onlySigner() {
+        if (!_isSigner[msg.sender]) revert OnlySigner();
         _;
     }
 
@@ -62,7 +72,9 @@ abstract contract QuorumBase {
         if (signer == address(0)) revert InvalidSigner(signer);
         if (_isSigner[signer]) return;
         _isSigner[signer] = true;
-        signerCount += 1;
+        _signers.push(signer);
+        _signerIndex[signer] = _signers.length;
+        signerCount = _signers.length;
         emit SignerAdded(signer);
         _enforceQuorum();
     }
@@ -70,12 +82,56 @@ abstract contract QuorumBase {
     /// @dev Internal removeSigner logic, overrideable for extra invariants.
     function _removeSignerInternal(address signer) internal virtual {
         if (!_isSigner[signer]) return;
-        _isSigner[signer] = false;
-        signerCount -= 1;
-        emit SignerRemoved(signer);
-        _enforceQuorum();
+
+    _isSigner[signer] = false;
+
+    uint256 idx = _signerIndex[signer];
+    if (idx != 0) {
+        uint256 lastIdx = _signers.length; 
+        if (idx != lastIdx) {
+            address last = _signers[lastIdx - 1];
+            _signers[idx - 1] = last;
+            _signerIndex[last] = idx;
+        }
+
+        _signers.pop();
+        _signerIndex[signer] = 0;
     }
 
+    signerCount = _signers.length;
+    emit SignerRemoved(signer);
+    _enforceQuorum();
+    }
+
+    function getSigners() external view onlySigner returns (address[] memory) {
+        return _signers;
+    }
+
+    function getSigners(uint256 offset, uint256 limit) external view onlySigner returns (address[] memory)
+    {
+        uint256 length = _signers.length;
+
+        if (offset >= length) {
+            return new address[](0);
+        }
+
+        uint256 end = offset + limit;
+        if (end > length) end = length;
+
+        uint256 size = end - offset;
+        address[] memory page = new address[](size);
+
+        for (uint256 i = 0; i < size; i++) {
+            page[i] = _signers[offset + i];
+        }
+
+        return page;
+    }
+
+    function signerAt(uint256 index) external view onlySigner returns (address) {
+        require(index < _signers.length, "Index out of bounds");
+        return _signers[index];
+    }
     /// @dev Internal setQuorum logic, overrideable if needed.
     function _setQuorum(uint256 newQuorum) internal virtual {
         if (signerCount == 0) {

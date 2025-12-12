@@ -7,14 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VcWallet.Business\VcWallet.Business.csproj" />
     <ProjectReference Include="..\VcWallet.DataAccess\VcWallet.DataAccess.csproj" />
     <ProjectReference Include="..\VcWallet.Domain\VcWallet.Domain.csproj" />
+    <ProjectReference Include="..\VcWallet.Eth.Contracts\VcWallet.Eth.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

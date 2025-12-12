@@ -1,19 +1,21 @@
-import { getBytes, isHexString, type Signer } from 'ethers'
 
-export type ProposalSignature = {
-  signer: string
-  signature: string
+import type { TypedDataSigner } from 'ethers'
+
+const domainName = 'VCWalletHubGovernance'
+const domainVersion = '1'
+const proposalTypes = {
+  Proposal: [{ name: 'proposalId', type: 'bytes32' }],
 }
 
-/**
- * Signs a proposal id (bytes32) with the provided signer and returns the signature payload.
- */
-export async function signProposalId(proposalId: string, signer: Signer): Promise<ProposalSignature> {
-  if (!isHexString(proposalId, 32)) {
-    throw new Error('proposalId must be a 32-byte hex string')
+export async function signProposalId(proposalId: string, signer: TypedDataSigner, verifyingContract: string) {
+  const network = await signer.provider!.getNetwork()
+  const domain = {
+    name: domainName,
+    version: domainVersion,
+    chainId: Number(network.chainId),
+    verifyingContract,
   }
-  const digest = getBytes(proposalId)
-  const signature = await signer.signMessage(digest)
+  const signature = await signer.signTypedData(domain, proposalTypes, { proposalId })
   const signerAddress = await signer.getAddress()
-  return { signer: signerAddress, signature }
+  return { signature, signer: signerAddress }
 }

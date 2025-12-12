@@ -271,6 +271,14 @@ export function useHubGovernanceOffchain(contractAddress?: string) {
     [getContract]
   )
 
+  const getAssignCandidateAccepted = useCallback(
+    async (proposalId: string) => {
+      const contract = await getContract(false)
+      return contract.assignCandidateAccepted(proposalId) as Promise<boolean>
+    },
+    [getContract]
+  )
+
   const getProposalIdByIndex = useCallback(
     async (index: bigint | number) => {
       const contract = await getContract(false)
@@ -285,7 +293,7 @@ export function useHubGovernanceOffchain(contractAddress?: string) {
   }, [getContract])
 
   const verifyOffchainApproval = useCallback(
-    async (proposalId: string, signatures: string[]) => {
+    async (proposalId: string, signatures: Array<string | Uint8Array>) => {
       const contract = await getContract(false)
       return contract.verifyOffchainApproval(proposalId, signatures) as Promise<boolean>
     },
@@ -374,7 +382,7 @@ export function useHubGovernanceOffchain(contractAddress?: string) {
   )
 
   const executeProposal = useCallback(
-    async (proposalId: string, signatures: string[]) => {
+    async (proposalId: string, signatures: Array<string | Uint8Array>) => {
       const contract = await getContract(true)
       const tx = await contract.executeProposal(proposalId, signatures)
       return tx.wait()
@@ -400,6 +408,7 @@ export function useHubGovernanceOffchain(contractAddress?: string) {
     getSignerCount,
     checkIsSigner,
     getProposal,
+    getAssignCandidateAccepted,
     getProposalIdByIndex,
     getProposalNonce,
     verifyOffchainApproval,

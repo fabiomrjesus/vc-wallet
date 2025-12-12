@@ -9,6 +9,7 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "YourStrong!Passw0rd"
+      MSSQL_PID: "Developer"
     volumes:
       - sqlserver-data:/var/opt/mssql
     healthcheck:

@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using VcWallet.Domain.Contexts;
 using VcWallet.Domain.Entities.OffChain;
 
 namespace VcWallet.DataAccess.Repositories;
 
-public class ProposalSignatureRepository
+public class OffChainProposalSignatureRepository
 {
     private readonly VcWalletDbContext _db;
 
-    public ProposalSignatureRepository(VcWalletDbContext db)
+    public OffChainProposalSignatureRepository(VcWalletDbContext db)
     {
         _db = db;
     }
@@ -18,7 +19,13 @@ public class ProposalSignatureRepository
         await _db.SaveChangesAsync(ct);
     }
 
-    public Task<List<OffChainHubProposalSignature>> GetByProposalIdAsync(Guid proposalId, CancellationToken ct = default)
+    public Task<bool> HasSignatureAsync(string proposalId, string signerAddress, CancellationToken ct = default)
+    {
+        return _db.OffChainHubProposalSignatures
+            .AnyAsync(s => s.ProposalId == proposalId && s.SignerAddress != null && s.SignerAddress.ToLower() == signerAddress.ToLower(), ct);
+    }
+
+    public Task<List<OffChainHubProposalSignature>> GetByProposalIdAsync(string proposalId, CancellationToken ct = default)
     {
         return _db.OffChainHubProposalSignatures
             .Where(s => s.ProposalId == proposalId)

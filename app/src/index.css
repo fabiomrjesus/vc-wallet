@@ -18,5 +18,5 @@ a {
 }
 
 html {
-  font-size: clamp(16px, 0.6vw + 14px, 20px);
+  font-size: clamp(16px, 0.6vw + 14px, 10px);
 }
